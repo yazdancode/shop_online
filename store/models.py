@@ -46,6 +46,11 @@ class Product(BaseModel):
     image = models.ImageField(
         upload_to="products/", blank=True, null=True, verbose_name="تصویر"
     )
+    is_sale = models.BooleanField(default=False, verbose_name="فروش")
+
+    sale_price = models.DecimalField(
+        max_digits=6, decimal_places=2, default=0, verbose_name="قیمت فروش"
+    )
 
     def __str__(self):
         return self.name
@@ -75,16 +80,3 @@ class Order(BaseModel):
     class Meta:
         verbose_name = "سفارش ها"
         verbose_name_plural = "سفارش ها"
-
-
-
-# class Brand(BaseModel):#+
-#     logo = models.ImageField(upload_to="brands/", blank=True, null=True, verbose_name="لوگو")#+
-#     description = models.TextField(blank=True, null=True, verbose_name="توضیحات")#+
-# #+
-#     def __str__(self):#+
-#         return self.name#+
-# #+
-#     class Meta:#+
-#         verbose_name = "برند"#+
-#         verbose_name_plural = "برندها"#+

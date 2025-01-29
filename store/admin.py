@@ -38,6 +38,8 @@ class ProductAdmin(admin.ModelAdmin):
         "category",
         "description",
         "image",
+        "is_sale",
+        "sale_price",
     )  # Display key product info
     search_fields = (
         "name",
