@@ -1,0 +1,11 @@
+from django.views.generic import ListView, TemplateView
+from .models import Product
+
+class HomeView(ListView):
+    model = Product
+    template_name = "home/index.html"
+    context_object_name = "products"
+
+
+class AboutView(TemplateView):
+    template_name = "home/about.html"

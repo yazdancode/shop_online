@@ -1,11 +1,11 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="fa" rtl="auto">
+<html lang="fa" dir="rtl">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
+        <meta name="description" content="خرید آنلاین با بهترین قیمت و کیفیت در Django Ecommerce" />
+        <meta name="author" content="Django Ecommerce" />
         <title>Django Ecommerce</title>
         <!-- Favicon -->
         <link rel="icon" type="image/x-icon" href="{% static 'home/assets/favicon.ico' %}" />
@@ -15,17 +15,20 @@
         <link href="{% static 'home/css/styles.css' %}" rel="stylesheet" />
     </head>
     <body>
-        <!-- Navigation-->
-        {% include  'home/navbar.html'%}
+        <!-- Navigation -->
+        {% include 'home/navbar.html' %}
 
         <!-- Main Content -->
-        <main>
+        <main class="container mt-4">
             {% block content %}{% endblock %}
         </main>
 
-        <!-- Footer-->
-        <footer class="py-5 bg-dark">
-            <!-- Footer content here -->
+        <!-- Footer -->
+        <footer class="py-5 bg-dark text-center text-white">
+            <p>تمامی حقوق محفوظ است &copy; Django Ecommerce</p>
         </footer>
+
+        <!-- JavaScript (Bootstrap & Custom Scripts) -->
+        <script src="{% static 'home/js/scripts.js' %}"></script>
     </body>
 </html>
