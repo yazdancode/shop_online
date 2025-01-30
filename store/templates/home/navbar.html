@@ -2,10 +2,10 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5 d-flex align-items-center justify-content-between">
-        
+
         <!-- Logo -->
         <a class="navbar-brand" href="#">
-            <img src="{% static 'home/svg/full-horizontal.svg' %}" alt="Logo" height="40">
+             <img class="image" src="{% static 'home/svg/full-horizontal.svg' %}" alt="Logo" height="40">
         </a>
 
         <!-- Mobile Toggle Button -->
@@ -17,10 +17,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="{%url 'home' %}">Home</a>
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'about'%}">About</a>
+                    <a class="nav-link" href="{% url 'about' %}">About</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Services</a>
@@ -31,17 +31,20 @@
             </ul>
         </div>
 
-        <!-- Search Box (Hidden on mobile) -->
-
-
         <!-- Cart and Login -->
         <div class="cart-login d-flex align-items-center">
             <a href="#" class="cart-icon me-3">
                 <i class="fas fa-shopping-cart fa-lg"></i>
             </a>
-            <a href="#" class="login-btn btn btn-outline-dark d-flex align-items-center">
-                <i class="fas fa-sign-in-alt me-2"></i> ورود | ثبت‌نام
-            </a>
-        </div>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout' %}" class="btn btn-outline-dark d-flex align-items-center">
+                    <i class="fas fa-sign-out-alt me-2"></i> خروج
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-outline-dark d-flex align-items-center">
+                    <i class="fas fa-sign-in-alt me-2"></i> ورود | ثبت‌نام
+                </a>
+            {% endif %}
     </div>
 </nav>

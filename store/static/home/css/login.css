@@ -1,0 +1,146 @@
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: IRANYekan, sans-serif;
+    font-size: 10px;
+    background-color: #FFFFFF;
+    min-height: 100vh;
+}
+
+.login-container {
+    width: 400px;
+    background-color: #FFFFFF;
+    border: 1px solid #E0E0E2;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-height: 400px;
+}
+
+.image {
+    font-family: IRANYekan, sans-serif;
+    font-size: 10px;
+    text-decoration: none;
+    word-spacing: 0;
+    background-color: #FFFFFF;
+    position: relative;
+    display: flex;
+    transition: all 0.3s ease-in-out;
+}
+
+.vorod {
+    font-family: IRANYekan, sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 40px;
+    text-decoration: none;
+    text-align: right;
+    word-spacing: 0;
+    background-color: #FFFFFF;
+    position: relative;
+    height: 40px;
+    width: 334px;
+    margin-top: 16px;
+    display: block;
+    transition: all 0.3s ease-in-out;
+}
+
+.login-button {
+    background-color: #ef394e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    margin-top: 16px;
+}
+
+.login-button:hover {
+    background-color: #ef2940;
+}
+
+.terms {
+    color: #81858b;
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.5;
+    margin-top: 16px;
+    font-family: IRANYekan, sans-serif;
+}
+
+.terms a {
+    color: #19bfd3;
+    text-decoration: none;
+}
+
+.terms a:hover {
+    color: #00bcd4;
+    text-decoration: underline;
+}
+
+.matn {
+    font-family: IRANYekan, sans-serif;
+    font-size: 12px;
+    line-height: 26px; /* هماهنگ با اندازه‌ی فونت */
+    color: #3F4064;
+    text-align: right;
+    word-spacing: 0;
+    background-color: #FFFFFF; /* فقط از این استفاده کنید */
+    position: relative;
+    width: 100%;
+    max-width: 334px; /* حداکثر عرض */
+    margin-top: 16px;
+    display: block;
+    box-sizing: border-box;
+    height: auto; /* ارتفاع خودکار */
+    transition: all 0.3s ease; /* اضافه کردن مدت زمان برای انتقال */
+}
+
+.matn1 {
+    font-family: IRANYekan, sans-serif;
+    font-size: 12px;
+    line-height: 26px; /* هماهنگ با اندازه‌ی فونت */
+    color: #3F4064;
+    text-align: right;
+    word-spacing: 0;
+    background-color: #FFFFFF; /* فقط از این استفاده کنید */
+    position: relative;
+    width: 100%;
+    max-width: 334px; /* حداکثر عرض */
+    margin-top: 16px;
+    display: block;
+    box-sizing: border-box;
+    height: auto; /* ارتفاع خودکار */
+    transition: all 0.3s ease; /* اضافه کردن مدت زمان برای انتقال */
+}
+
+
+
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .login-container {
+        width: 90%;
+        padding: 24px;
+    }
+
+    .vorod {
+        width: 100%;
+    }
+}

@@ -1,0 +1,25 @@
+{% load static %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود | دیجی‌کالا</title>
+    <link rel="stylesheet" href="{% static 'home/css/login.css' %}">
+</head>
+<body>
+    <div class="login-container">
+        <img class="image" src="{% static 'home/img/full-vertical.svg' %}" alt="Logo" height="70">
+        <p class="vorod">ورود | ثبت‌نام</p>
+        <p class="matn">سلام!</p>
+        <p class="matn1">لطفا شماره موبایل یا ایمیل خود را وارد کنید</p>
+
+        <button class="login-button">ورود</button>
+        <p class="terms">ورود شما به معنای پذیرش <a href="#">شرایط دیجی‌کالا</a> و <a href="#">قوانین حریم خصوصی</a> است</p>
+    </div>
+</body>
+</html>
+{% endblock %}

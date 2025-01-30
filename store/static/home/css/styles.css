@@ -10825,66 +10825,31 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important;
   }
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: white;
-    padding: 10px 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  }
-  .logo .logo-text {
-    font-size: 22px;
-    font-weight: bold;
-    color: #d51243;
-  }
-  .search-box {
-    display: flex;
-    align-items: center;
-    background: #f1f1f1;
-    border-radius: 5px;
-    padding: 5px;
-    width: 300px;
+
+.image {
+  font-family: 'IRANYekan', sans-serif;
+  font-size: 14px; /* Adjusted font size for better readability */
+  text-decoration: none;
+  word-spacing: 0;
+  background-color: #FFFFFF; /* Corrected background color */
+  position: relative;
+  color: #000000;
+  height: 68px;
+  width: 100%; /* Use 100% width for responsiveness */
+  padding: 12px 20px; /* Added horizontal padding for better spacing */
+  min-height: auto;
+  min-width: auto;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center; /* Vertically centers content */
+  justify-content: center; /* Horizontally centers content */
+  z-index: 2;
+  transform: none;
+  transition: all 0.3s ease; /* Added transition duration for smoother effect */
 }
 
-.search-box input {
-    border: none;
-    outline: none;
-    background: none;
-    flex: 1;
-    padding: 5px;
-    font-size: 14px;
-}
 
-.search-box i {
-    color: gray;
-    margin-left: 5px;
-}
-
-.cart-login {
-    display: flex;
-    align-items: center;
-}
-
-.cart-icon {
-    font-size: 20px;
-    margin-left: 15px;
-    color: black;
-}
-
-.login-btn {
-    background: white;
-    border: 1px solid #ccc;
-    padding: 5px 10px;
-    border-radius: 5px;
-    text-decoration: none;
-    color: black;
-    display: flex;
-    align-items: center;
-}
-
-.login-btn i {
-    margin-left: 5px;
-}
 }
