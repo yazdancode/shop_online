@@ -1,5 +1,10 @@
 from django.db import models
 from jdatetime import datetime
+from django.contrib.auth.hashers import check_password
+
+
+def persian_now():
+    return datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
 
 
 class BaseModel(models.Model):
@@ -27,6 +32,9 @@ class Customer(BaseModel):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+    def check_password(self, raw_password):
+        return check_password(raw_password, self.password)
 
     class Meta:
         verbose_name = "مشتریان"
@@ -58,10 +66,6 @@ class Product(BaseModel):
     class Meta:
         verbose_name = "محصولات"
         verbose_name_plural = "محصولات"
-
-
-def persian_now():
-    return datetime.now()
 
 
 class Order(BaseModel):

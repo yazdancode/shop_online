@@ -3,20 +3,6 @@ from django.core.validators import RegexValidator
 from store.models import Customer
 
 
-class SearchForm(forms.Form):
-    query = forms.CharField(
-        label="جستجو",
-        max_length=100,
-        widget=forms.TextInput(
-            attrs={
-                "class": "form-control",
-                "placeholder": "عبارت مورد نظر را وارد کنید...",
-                "style": "font-family: IRANYekan, sans-serif;",
-            }
-        ),
-    )
-
-
 class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer
@@ -29,25 +15,29 @@ class CustomerForm(forms.ModelForm):
         widgets = {
             "phone": forms.TextInput(
                 attrs={
-                    "class": "form-control form-control-sm",
-                    "placeholder": "شماره تلفن خود را وارد کنید",
-                    "style": "direction:ltr; text-align:left; font-family:IRANYekan, sans-serif; font-size:10px; "
-                    "text-decoration:none solid rgb(35, 37, 78); word-spacing:0; background-color:#FFFFFF; "
-                    "color:#23254E; height:48px; width:334.4px; border:1px solid #D32F2F; padding:8px 0px; "
-                    "display: flex; overflow:hidden; cursor:default;",
+                    "class": "form-input",
+                    "placeholder": "شماره موبایل یا ایمیل",
+                    "style": "direction:ltr; text-align:left; font-family:IRANYekan, sans-serif; font-size:10px; ",
                 }
             ),
             "email": forms.EmailInput(
                 attrs={
                     "class": "form-control",
                     "placeholder": "ایمیل خود را وارد کنید",
-                    "style": "font-family: IRANYekan, sans-serif;",
+                    "style": "direction:ltr; text-align:left; font-family:IRANYekan, sans-serif; font-size:10px; "
+                    "text-decoration:none solid rgb(35, 37, 78); word-spacing:0; background-color:#FFFFFF; "
+                    "color:#23254E; height:48px; width:334.4px; border:1px solid #D32F2F; padding:8px 0px; "
+                    "display: flex; overflow:hidden; cursor:default;",
                     "autocomplete": "email",
                 }
             ),
             "password": forms.PasswordInput(
                 attrs={
                     "class": "form-control",
+                    "style": "direction:ltr; text-align:left; font-family:IRANYekan, sans-serif; font-size:10px; "
+                    "text-decoration:none solid rgb(35, 37, 78); word-spacing:0; background-color:#FFFFFF; "
+                    "color:#23254E; height:48px; width:334.4px; border:1px solid #D32F2F; padding:8px 0px; "
+                    "display: flex; overflow:hidden; cursor:default;",
                     "placeholder": "رمز عبور خود را وارد کنید",
                     "autocomplete": "off",
                 }
@@ -61,3 +51,7 @@ class CustomerForm(forms.ModelForm):
                 )
             ]
         }
+
+
+class VerificationForm(forms.Form):
+    code = forms.CharField(label="کد تأیید")

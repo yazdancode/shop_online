@@ -131,6 +131,28 @@ body {
     transition: all 0.3s ease; /* اضافه کردن مدت زمان برای انتقال */
 }
 
+.form-input{
+    text-decoration:none solid rgb(35, 37, 78);
+    word-spacing:0;
+    background-color:#FFFFFF;
+    color:#23254E; height:48px;
+    width:334px;
+    padding:8px 0;
+    display: flex;
+    overflow:hidden;
+    cursor:default;
+    border: 2px solid #007bff;
+}
+
+.form-input.error {
+    border-color: red;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #0056b3;
+}
+
 
 
 
