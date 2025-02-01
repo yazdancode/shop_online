@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Product
 from .forms import CustomerForm
 from django.contrib.auth import authenticate, login, logout
+import requests
 
 
 def home(request):
@@ -10,7 +11,7 @@ def home(request):
 
 
 def about(request):
-    return render(request, "home/about.html", {})
+    return render(request, "home/about.html")
 
 
 def login_user(request):
@@ -20,7 +21,6 @@ def login_user(request):
             email = form.cleaned_data["email"]
             phone = form.cleaned_data["phone"]
             request.session["phone"] = phone
-
             user = authenticate(request, email=email, phone=phone)
             if user is not None:
                 login(request, user)
@@ -55,5 +55,7 @@ def verify_code(request):
     return render(request, "home/verify_code.html", {"form": form, "message": message})
 
 
+
 def logout_user(request):
-    pass
+    logout(request)
+    return redirect("home")

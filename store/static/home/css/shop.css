@@ -1,0 +1,32 @@
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 1rem;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+.cart-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    order: 2;
+}
+.login-section {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid #e2e2e2;
+    border-radius: 8px;
+    cursor: pointer;
+    order: 1;
+}
+.login-text {
+    color: #333;
+    text-decoration: none;
+}
+.login-icon {
+    width: 20px;
+    height: 20px;
+}
