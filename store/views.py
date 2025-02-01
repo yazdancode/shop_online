@@ -14,11 +14,17 @@ def about(request):
 
 # TODO: not save session in email and phone
 def login_user(request):
+    if request.method == 'POST':
+        pass
+        
+
     return render(request, "home/login.html", {})
 
 
 # TODO: not save session in email and phone
 def verify_code(request):
+    if request.method == 'POST':
+        pass
     return render(request, "home/verify_code.html", {})
 
 

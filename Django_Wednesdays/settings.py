@@ -25,6 +25,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "store",  # اپلیکیشن‌های پروژه
+    "compressor",
+    "crispy_forms",
 ]
 
 MIDDLEWARE = [
@@ -36,6 +38,12 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',  # این خط را اضافه کنید
+]
+
 
 ROOT_URLCONF = "Django_Wednesdays.urls"
 
@@ -105,3 +113,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+COMPRESS_ENABLED = True
+COMPRESS_OFFLINE = True  # برای فشرده‌سازی آفلاین
+
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
