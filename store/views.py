@@ -14,36 +14,41 @@ def about(request):
     return render(request, "home/about.html")
 
 
-# TODO: not save session in email and phone
+
 def login_user(request):
     if request.method == "POST":
-        phone = request.POST['phone']  # دریافت شماره تلفن از فرم
-        user = authenticate(request, phone=phone)  # احراز هویت با شماره تلفن
-        if user is not None:
-            login(request, user)  # ورود به سیستم
-            messages.success(request, 'شما با موفقیت وارد شدید.')  # پیام موفقیت
-            return redirect('verify_code')  # هدایت به صفحه تایید کد
+        phone = request.POST.get('phone')
+        if phone:
+            user = authenticate(request, phone=phone)
+            if user is not None:
+                login(request, user)
+                messages.success(request, 'شما با موفقیت وارد شدید.')
+                return redirect('verify_code')
+            else:
+                messages.error(request, 'کاربری با این شماره تلفن پیدا نشد.')
+                return redirect('login')
         else:
-            messages.error(request, 'کاربری با این شماره تلفن پیدا نشد.')  # پیام خطا
-            return redirect('login')  # هدایت به صفحه ورود
-
+            messages.error(request, 'لطفا شماره تلفن خود را وارد کنید.')
+            return redirect('login')
     else:
-        return render(request, "home/login.html", {})  # نمایش فرم ورود در صورت درخواست GET
+        return render(request, "home/login.html", {})
 
 # TODO: not save session in email and phone
-#TODO: error MultiValueDictKeyError at /login/password/
 def verify_code(request):
     if request.method == "POST":
-        password = request.POST['password']  # دریافت رمز عبور از فرم
-        user = authenticate(request, password=password)  # احراز هویت با رمز عبور
-        if user is not None:
-            login(request, user)  # ورود به سیستم
-            messages.success(request, 'شما با موفقیت وارد شدید.')  # پیام موفقیت
-            return redirect('home')  # هدایت به صفحه اصلی
+        password = request.POST.get('password')
+        if password:
+            user = authenticate(request, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, 'شما با موفقیت وارد شدید.')
+                return redirect('home')
+            else:
+                messages.error(request, 'رمز عبور نادرست است.')
+                return redirect('login')
         else:
-            messages.error(request, 'رمز عبور نادرست است.')  # پیام خطا
-            return redirect('login')  # هدایت به صفحه ورود
-
+            messages.error(request, 'لطفا رمز عبور خود را وارد کنید.')
+            return redirect('verify_code')
     else:
         return render(request, "home/verify_code.html", {})
 
