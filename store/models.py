@@ -84,3 +84,6 @@ class Order(BaseModel):
     class Meta:
         verbose_name = "سفارش ها"
         verbose_name_plural = "سفارش ها"
+
+
+

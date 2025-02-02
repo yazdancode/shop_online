@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "store",  # اپلیکیشن‌های پروژه
     "compressor",
     "crispy_forms",
+    "grappelli"
     # "debug_toolbar",
 ]
 
