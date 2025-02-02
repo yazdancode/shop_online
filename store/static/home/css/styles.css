@@ -10851,5 +10851,13 @@ textarea.form-control-lg {
   transition: all 0.3s ease; /* Added transition duration for smoother effect */
 }
 
+@font-face {
+  font-family: 'IRANYekan';
+  src: url('fonts/IRANYekan.woff2') format('woff2'),
+       url('fonts/IRANYekan.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 
 }

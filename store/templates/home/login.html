@@ -11,13 +11,13 @@
         <form method="POST" action="{% url 'verify_code' %}" id="login-form">
             {% csrf_token %}
             {{ form.phone }}
-
             <button type="submit" class="login-button">ورود</button>
         </form>
-
         <p class="terms">
-            ورود شما به معنای پذیرش <a href="#">شرایط دیجی‌کالا</a> و <a href="#">قوانین حریم خصوصی</a> است
+    ورود شما به معنای پذیرش        <a href="{% url 'terms' %}">شرایط دیجی‌کالا</a> و
+            <a href="{% url 'privacy' %}">قوانین حریم خصوصی</a> است
         </p>
+
     </div>
 
     <script src="{% static 'home/js/validation.js' %}"></script>

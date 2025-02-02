@@ -17,7 +17,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = [
-    "grappelli",  # باید ابتدا اضافه شود
+    # "grappelli",  # باید ابتدا اضافه شود
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -27,7 +27,14 @@ INSTALLED_APPS = [
     "store",  # اپلیکیشن‌های پروژه
     "compressor",
     "crispy_forms",
+    # "debug_toolbar",
 ]
+
+# INTERNAL_IPS = [
+#     # برای localhost
+#     '127.0.0.1',
+# ]
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -37,11 +44,12 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 STATICFILES_FINDERS = [
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'compressor.finders.CompressorFinder',  # این خط را اضافه کنید
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "compressor.finders.CompressorFinder",  # این خط را اضافه کنید
 ]
 
 
@@ -117,5 +125,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 COMPRESS_ENABLED = True
 COMPRESS_OFFLINE = True  # برای فشرده‌سازی آفلاین
 
-CRISPY_TEMPLATE_PACK = 'bootstrap5'
-
+CRISPY_TEMPLATE_PACK = "bootstrap5"
