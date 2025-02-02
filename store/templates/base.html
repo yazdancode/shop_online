@@ -24,6 +24,13 @@
     <body>
         <!-- Navigation -->
         {% include 'home/navbar.html' %}
+        {% if messages %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+
+
+        {% endif %}
 
         <!-- Main Content -->
         <main class="container mt-4">

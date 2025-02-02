@@ -10,8 +10,7 @@
 
         <form method="POST" action="{% url 'verify_code' %}">
             {% csrf_token %}
-            {{ form.password }}
-
+            <input type="password" class="form-input" name="password" placeholder="Enter your password">
             <button type="submit" class="login-button">ورود</button>
         </form>
 

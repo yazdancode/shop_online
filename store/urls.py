@@ -10,6 +10,4 @@ urlpatterns = [
     path("logout/", views.logout_user, name="logout"),
     path("page/terms/", views.terms, name="terms"),
     path("page/privacy/", views.privacy, name="privacy"),
-
-    path('show_customers/', views.show_customers, name='show_customers'),
 ]

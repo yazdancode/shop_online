@@ -6,7 +6,7 @@ from store.models import Customer
 class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer
-        fields = ["phone", "password", "email"]
+        fields = ["phone", "password", "email", "otp_code"]
         labels = {
             "phone": "تلفن همراه",
             "email": "ایمیل",

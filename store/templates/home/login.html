@@ -10,7 +10,7 @@
 
         <form method="POST" action="{% url 'verify_code' %}" id="login-form">
             {% csrf_token %}
-            {{ form.phone }}
+            <input type="text" class="form-input" name="phone" placeholder="شماره موبایل یا ایمیل">
             <button type="submit" class="login-button">ورود</button>
         </form>
         <p class="terms">
