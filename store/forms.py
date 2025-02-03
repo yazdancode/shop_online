@@ -1,5 +1,8 @@
 from django import forms
 from django.core.validators import RegexValidator
+from django.contrib.auth.models import User
+from django.contrib.auth.froms import UserCreationForm
+from django import forms
 from store.models import Customer
 
 

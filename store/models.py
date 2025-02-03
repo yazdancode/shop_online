@@ -1,6 +1,6 @@
+from django.contrib.auth.hashers import check_password
 from django.db import models
 from jdatetime import datetime
-from django.contrib.auth.hashers import check_password
 
 
 def persian_now():
@@ -29,7 +29,7 @@ class Customer(BaseModel):
     last_name = models.CharField(max_length=255, verbose_name="نام خانوادگی")
     email = models.EmailField(max_length=255, unique=True, verbose_name="ایمیل")
     password = models.CharField(max_length=255, verbose_name="رمز عبور")
-    is_admin = models.BooleanField(default=False, verbose_name='سرپرست')
+    is_admin = models.BooleanField(default=False, verbose_name="سرپرست")
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -85,6 +85,3 @@ class Order(BaseModel):
     class Meta:
         verbose_name = "سفارش ها"
         verbose_name_plural = "سفارش ها"
-
-
-
