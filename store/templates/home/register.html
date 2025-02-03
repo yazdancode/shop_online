@@ -7,9 +7,9 @@
         <p class="matn">سلام!</p>
         <p class="matn1">لطفا شماره موبایل یا ایمیل خود را وارد کنید</p>
 
-        <form method="POST" action="{% url 'verify_code' %}" id="login-form">
+        <form method="POST" action="{% url 'register' %}" id="login-form">
             {% csrf_token %}
-            <input type="text" class="form-input" name="phone" placeholder="شماره موبایل یا ایمیل">
+            {{ form.as_p }}
             <button type="submit" class="login-button">ورود</button>
         </form>
         <p class="terms">
