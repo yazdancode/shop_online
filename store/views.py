@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
-from django.core.exceptions import ValidationError
 from .forms import SignUpForm
 from .models import Product
 
@@ -38,7 +37,9 @@ def verify_code(request):
         if password:
             user = authenticate(request, password=password)
             if user is not None:
-                login(request, user, backend="django.contrib.auth.backends.ModelBackend")
+                login(
+                    request, user, backend="django.contrib.auth.backends.ModelBackend"
+                )
                 messages.success(request, "شما با موفقیت وارد شدید.")
                 return redirect("home")
             else:
@@ -85,16 +86,12 @@ def register_user(request):
                 messages.success(request, "ثبت‌نام با موفقیت انجام شد.")
                 return redirect("home")
         else:
-            messages.error(request, "مشکلی در ثبت‌نام رخ داده است. لطفا دوباره امتحان کنید.")
+            messages.error(
+                request, "مشکلی در ثبت‌نام رخ داده است. لطفا دوباره امتحان کنید."
+            )
     return render(request, "home/register.html", {"form": form})
 
 
 def product(request, pk):
     product = Product.objects.get(id=pk)
     return render(request, "home/product.html", {"product": product})
-
-
-
-
-
-
