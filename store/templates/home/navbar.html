@@ -1,11 +1,13 @@
 {% load static %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <link href="{% static 'home/css/shop.css' %}" rel="stylesheet" />
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5 d-flex align-items-center justify-content-between">
 
         <!-- Logo -->
         <a class="navbar-brand" href="#">
-             <img class="image" src="{% static 'home/svg/full-horizontal.svg' %}" alt="Logo" height="40">
+            <img class="image" src="{% static 'home/svg/full-horizontal.svg' %}" alt="Logo" height="40">
         </a>
 
         <!-- Mobile Toggle Button -->
@@ -13,7 +15,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Navbar Links (Collapse for mobile) -->
+        <!-- Navbar Links -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
@@ -30,35 +32,55 @@
                 </li>
             </ul>
         </div>
+
         <!-- Cart and Login -->
         <div class="cart-login d-flex align-items-center">
-            <a href="#" class="cart-icon me-3">
+            <!-- سبد خرید -->
+            <a href="{% url 'cart_summary' %}" class="cart-icon me-3">
                 <i class="fas fa-shopping-cart fa-lg"></i>
             </a>
+
             {% if user.is_authenticated %}
                 <a href="{% url 'logout' %}" class="btn btn-outline-dark d-flex align-items-center">
-                    <i class="fas fa-sign-out-alt me-2"></i> خروج
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 16l4-4m0 0l-4-4m4 4H9"></path>
+                        <path d="M13 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8"></path>
+                    </svg>
+                    <span class="ms-2">خروج</span>
                 </a>
             {% else %}
-            <header class="header">
-                <div class="cart-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-                    </svg>
+                <!-- دکمه ورود/ثبت‌نام با Dropdown -->
+                <div class="dropdown">
+                    <button class="btn btn-outline-dark dropdown-toggle d-flex align-items-center" type="button" id="loginDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 21v-2a4 4 0 0 0-8 0v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span class="ms-2">حساب کاربری</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="loginDropdown">
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="{% url 'login' %}">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M11 16l-4-4m0 0l4-4m-4 4h12"></path>
+                                </svg>
+                                <span class="ms-2">ورود</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="{% url 'register' %}">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 21v-2a4 4 0 0 0-8 0v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                    <line x1="20" y1="8" x2="20" y2="14"></line>
+                                    <line x1="23" y1="11" x2="17" y2="11"></line>
+                                </svg>
+                                <span class="ms-2">ثبت‌نام</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="login-section">
-                    <svg class="login-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
-                    </svg>
-                    <a href="{% url 'login' %}" class="login-text">ورود</a>
-                </div>
-                <div class="login-section">
-                    <svg class="login-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
-                    </svg>
-                    <a href="{% url 'register' %}" class="login-text"> ثبت‌نام</a>
-                </div>
-            </header>
             {% endif %}
+        </div>
     </div>
 </nav>

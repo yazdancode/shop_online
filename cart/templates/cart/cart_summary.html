@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Header -->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Shopping Cart</h1>
+            <p class="lead fw-normal text-white-50 mb-0">View Your Cart...</p>
+        </div>
+    </div>
+</header>
+<br/>
+
+<div class="container">
+    {% if cart_products %}
+        {% for product in cart_products %}
+        <div class="card mb-3">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="{{ product.name }}">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text justified">{{ product.description }}</p>
+
+                        {% if product.is_sale %}
+                        <div class="d-flex justify-content-center small text-warning mb-2">
+                            <div class="bi-star-fill"></div>&nbsp;Sale!&nbsp;<div class="bi-star-fill"></div>
+                        </div>
+                        <strike>${{ product.price }}</strike> &nbsp; <strong>${{ product.sale_price }}</strong>
+                        {% else %}
+                        <strong>${{ product.price }}</strong>
+                        {% endif %}
+
+                        <br/><br/>
+
+                        <!-- Quantity Selector -->
+                        <div class="row justify-content-center">
+                            <div class="col-md-2">Quantity:</div>
+                            <div class="col-md-2">
+                                <select class="form-select form-select-sm" id="select{{ product.id }}">
+                                    <option selected>{{ quantities|get_item:product.id }}</option>
+                                    {% for i in "12345" %}
+                                        <option value="{{ i }}">{{ i }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <!-- Buttons -->
+                        <div class="d-flex justify-content-around">
+                            <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
+                            <button type="button" data-index="{{ product.id }}" class="btn btn-secondary update-cart">Update</button>
+                            <button type="button" data-index="{{ product.id }}" class="btn btn-danger delete-product">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <!-- Total Price & Checkout -->
+        <div align="right">
+            <h3>Total: ${{ totals }}</h3>
+            <a href="{% url 'checkout' %}" class="btn btn-success">Checkout</a>
+        </div>
+    {% else %}
+        <p class="text-center">There's Nothing In Your Cart...</p>
+    {% endif %}
+</div>
+
+<!-- JavaScript for AJAX -->
+<script>
+function getCSRFToken() {
+    return document.querySelector('[name=csrfmiddlewaretoken]').value;
+}
+
+// Update Cart
+$(document).on('click', '.update-cart', function(e){
+    e.preventDefault();
+    var $this = $(this);
+    $this.prop('disabled', true); // جلوگیری از کلیک مکرر
+
+    var productid = $this.data('index');
+    $.ajax({
+        type: 'POST',
+        url: '{% url 'cart_update' %}',
+        data: {
+            product_id: productid,
+            product_qty: $('#select' + productid + ' option:selected').text(),
+            csrfmiddlewaretoken: getCSRFToken(),
+            action: 'post'
+        },
+        success: function(){
+            alert("سبد خرید به‌روزرسانی شد!");
+            location.reload();
+        },
+        error: function(){
+            alert("خطا در به‌روزرسانی!");
+            $this.prop('disabled', false); // بازگردانی دکمه در صورت خطا
+        }
+    });
+});
+
+// Delete Item From Cart
+$(document).on('click', '.delete-product', function(e){
+    e.preventDefault();
+    var $this = $(this);
+    $this.prop('disabled', true);
+
+    $.ajax({
+        type: 'POST',
+        url: '{% url 'cart_delete' %}',
+        data: {
+            product_id: $this.data('index'),
+            csrfmiddlewaretoken: getCSRFToken(),
+            action: 'post'
+        },
+        success: function(){
+            alert("محصول با موفقیت حذف شد!");
+            location.reload();
+        },
+        error: function(){
+            alert("خطا در حذف محصول!");
+            $this.prop('disabled', false);
+        }
+    });
+});
+</script>
+
+{% endblock %}

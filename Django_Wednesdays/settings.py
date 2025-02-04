@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     "compressor",
     "crispy_forms",
     "grappelli",
-    "cart.apps.CartConfig"
+    "cart.apps.CartConfig",
     # "debug_toolbar",
 ]
 
