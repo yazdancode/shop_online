@@ -24,10 +24,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "store",  # اپلیکیشن‌های پروژه
+    "store.apps.StoreConfig",  # اپلیکیشن‌های پروژه
     "compressor",
     "crispy_forms",
     "grappelli",
+    "cart.apps.CartConfig"
     # "debug_toolbar",
 ]
 
