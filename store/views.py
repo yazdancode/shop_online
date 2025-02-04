@@ -1,8 +1,8 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from .forms import SignUpForm
-from .models import Product
+from .models import Product, Category
 
 
 def home(request):
@@ -93,5 +93,16 @@ def register_user(request):
 
 
 def product(request, pk):
-    product = Product.objects.get(id=pk)
-    return render(request, "home/product.html", {"product": product})
+    products = Product.objects.get(id=pk)
+    return render(request, "home/product.html", {"products": products})
+
+
+def category(request, foo):
+    foo = foo.replace("-", " ")
+    categorys = get_object_or_404(Category, name=foo)
+
+    products = Product.objects.filter(category=categorys)
+
+    return render(
+        request, "home/category.html", {"products": products, "category": categorys}
+    )

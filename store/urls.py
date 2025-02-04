@@ -14,4 +14,5 @@ urlpatterns = [
     path("register/", views.register_user, name="register"),
     # product new users
     path("product/<int:pk>", views.product, name="product"),
+    path("category/<str:foo>", views.category, name="category"),
 ]
