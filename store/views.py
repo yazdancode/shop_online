@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
-
+from django.core.exceptions import ValidationError
 from .forms import SignUpForm
 from .models import Product
 
@@ -26,46 +26,48 @@ def login_user(request):
                 return redirect("verify_code")
             else:
                 messages.error(request, "کاربری با این شماره تلفن پیدا نشد.")
-                return redirect("login")
         else:
             messages.error(request, "لطفا شماره تلفن خود را وارد کنید.")
-            return redirect("login")
-    else:
-        return render(request, "home/login.html", {})
+        return redirect("login")
+    return render(request, "home/login.html")
 
 
-# TODO: not save session in email and phone
 def verify_code(request):
     if request.method == "POST":
         password = request.POST.get("password")
         if password:
             user = authenticate(request, password=password)
             if user is not None:
-                login(request, user)
+                login(request, user, backend="django.contrib.auth.backends.ModelBackend")
                 messages.success(request, "شما با موفقیت وارد شدید.")
                 return redirect("home")
             else:
                 messages.error(request, "رمز عبور نادرست است.")
-                return redirect("login")
         else:
             messages.error(request, "لطفا رمز عبور خود را وارد کنید.")
-            return redirect("verify_code")
-    else:
-        return render(request, "home/verify_code.html", {})
+        return redirect("verify_code")
+    return render(request, "home/verify_code.html")
 
 
-# TODO: not template terms.html
 def terms(request):
-    return render(request, "home/terms.html")
+    try:
+        return render(request, "home/terms.html")
+    except Exception:
+        messages.error(request, "صفحه قوانین در دسترس نیست.")
+        return redirect("home")
 
 
-# TODO: not tempalte privacy.html
 def privacy(request):
-    return render(request, "home/privacy.html")
+    try:
+        return render(request, "home/privacy.html")
+    except Exception:
+        messages.error(request, "صفحه حریم خصوصی در دسترس نیست.")
+        return redirect("home")
 
 
 def logout_user(request):
     logout(request)
+    messages.success(request, "شما با موفقیت خارج شدید.")
     return redirect("home")
 
 
@@ -74,17 +76,25 @@ def register_user(request):
     if request.method == "POST":
         form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
             username = form.cleaned_data["username"]
             password = form.cleaned_data["password1"]
             user = authenticate(username=username, password=password)
-            login(request, user)
-            messages.success(request, "You have Register Successfully")
-            return redirect("register")
+            if user:
+                login(request, user)
+                messages.success(request, "ثبت‌نام با موفقیت انجام شد.")
+                return redirect("home")
         else:
-            messages.success(
-                request, "Whoops! There a problem Registering, please try again..."
-            )
-            return redirect("home")
-    else:
-        return render(request, "home/register.html", {"form": form})
+            messages.error(request, "مشکلی در ثبت‌نام رخ داده است. لطفا دوباره امتحان کنید.")
+    return render(request, "home/register.html", {"form": form})
+
+
+def product(request, pk):
+    product = Product.objects.get(id=pk)
+    return render(request, "home/product.html", {"product": product})
+
+
+
+
+
+

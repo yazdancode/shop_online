@@ -12,4 +12,5 @@ urlpatterns = [
     path("page/privacy/", views.privacy, name="privacy"),
     # register new users
     path("register/", views.register_user, name="register"),
+    path("product/<int:pk>", views.product, name="product"),
 ]
