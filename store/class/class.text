@@ -9,3 +9,23 @@ class HomeView(ListView):
 
 class AboutView(TemplateView):
     template_name = "home/about.html"
+
+
+clsss Login_User():
+    pass
+
+
+class Logout_User():
+    pass
+
+
+class Register_User():
+    pass
+
+
+class Product():
+    pass
+
+
+class Category():
+    pass

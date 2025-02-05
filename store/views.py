@@ -13,10 +13,11 @@ def home(request):
 def about(request):
     return render(request, "home/about.html")
 
+
 def login_user(request):
     if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST["username"]
+        password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
@@ -29,14 +30,14 @@ def login_user(request):
                     cart.db_add(product=key, quantity=value)
 
             messages.success(request, "شما با موفقیت وارد شدید!")
-            return redirect('home')
+            return redirect("home")
         else:
-            messages.error(request, "نام کاربری یا رمز عبور اشتباه است. لطفا دوباره امتحان کنید.")
-            return redirect('login')
+            messages.error(
+                request, "نام کاربری یا رمز عبور اشتباه است. لطفا دوباره امتحان کنید."
+            )
+            return redirect("login")
 
-    return render(request, 'home/login.html')
-
-
+    return render(request, "home/login.html")
 
 
 def logout_user(request):
@@ -62,7 +63,7 @@ def register_user(request):
             messages.error(
                 request, "مشکلی در ثبت‌نام رخ داده است. لطفا دوباره امتحان کنید."
             )
-            return redirect('register')
+            return redirect("register")
     return render(request, "home/register.html", {"form": form})
 
 

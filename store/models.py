@@ -69,7 +69,9 @@ class Product(models.Model):
     )
     image = models.ImageField(upload_to="uploads/product/", verbose_name="تصویر محصول")
     is_sale = models.BooleanField(default=False, verbose_name="تخفیف دارد؟")
-    sale_price = models.DecimalField(default=persian_now, decimal_places=2, max_digits=6, verbose_name="قیمت تخفیفی")
+    sale_price = models.DecimalField(
+        default=persian_now, decimal_places=2, max_digits=6, verbose_name="قیمت تخفیفی"
+    )
 
     def __str__(self):
         return self.name
