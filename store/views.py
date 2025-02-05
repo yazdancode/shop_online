@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render, get_object_or_404
 from .forms import SignUpForm
-from .models import Product, Category
+from .models import Product, Category, Profile
 
 
 def home(request):
@@ -13,57 +13,30 @@ def home(request):
 def about(request):
     return render(request, "home/about.html")
 
-
 def login_user(request):
     if request.method == "POST":
-        phone = request.POST.get("phone")
-        if phone:
-            user = authenticate(request, phone=phone)
-            if user is not None:
-                login(request, user)
-                messages.success(request, "شما با موفقیت وارد شدید.")
-                return redirect("verify_code")
-            else:
-                messages.error(request, "کاربری با این شماره تلفن پیدا نشد.")
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            current_user, created = Profile.objects.get_or_create(user=user)
+            saved_cart = current_user.old_cart
+            if saved_cart:
+                converted_cart = json.loads(saved_cart)
+                cart = Cart(request)
+                for key, value in converted_cart.items():
+                    cart.db_add(product=key, quantity=value)
+
+            messages.success(request, "شما با موفقیت وارد شدید!")
+            return redirect('home')
         else:
-            messages.error(request, "لطفا شماره تلفن خود را وارد کنید.")
-        return redirect("login")
-    return render(request, "home/login.html")
+            messages.error(request, "نام کاربری یا رمز عبور اشتباه است. لطفا دوباره امتحان کنید.")
+            return redirect('login')
+
+    return render(request, 'home/login.html')
 
 
-def verify_code(request):
-    if request.method == "POST":
-        password = request.POST.get("password")
-        if password:
-            user = authenticate(request, password=password)
-            if user is not None:
-                login(
-                    request, user, backend="django.contrib.auth.backends.ModelBackend"
-                )
-                messages.success(request, "شما با موفقیت وارد شدید.")
-                return redirect("home")
-            else:
-                messages.error(request, "رمز عبور نادرست است.")
-        else:
-            messages.error(request, "لطفا رمز عبور خود را وارد کنید.")
-        return redirect("verify_code")
-    return render(request, "home/verify_code.html")
-
-
-def terms(request):
-    try:
-        return render(request, "home/terms.html")
-    except Exception:
-        messages.error(request, "صفحه قوانین در دسترس نیست.")
-        return redirect("home")
-
-
-def privacy(request):
-    try:
-        return render(request, "home/privacy.html")
-    except Exception:
-        messages.error(request, "صفحه حریم خصوصی در دسترس نیست.")
-        return redirect("home")
 
 
 def logout_user(request):
@@ -89,6 +62,7 @@ def register_user(request):
             messages.error(
                 request, "مشکلی در ثبت‌نام رخ داده است. لطفا دوباره امتحان کنید."
             )
+            return redirect('register')
     return render(request, "home/register.html", {"form": form})
 
 

@@ -6,7 +6,7 @@ class Cart:
 
         if "session_key" not in self.session:
             self.session["session_key"] = cart
-        
+
         self.cart = cart
 
     def add(self, product_id, quantity=1, update_quantity=False):

@@ -1,24 +1,48 @@
-{% load static %}
-
+{% extends 'base.html' %}
 {% block content %}
-    <div class="login-container">
-        <img class="image" src="{% static 'home/img/full-vertical.svg' %}" alt="Logo" height="70">
-        <link rel="stylesheet" href="{% static 'home/css/login.css' %}">
-        <p class="vorod">ورود | ثبت‌نام</p>
-        <p class="matn">سلام!</p>
-        <p class="matn1">لطفا شماره موبایل یا ایمیل خود را وارد کنید</p>
 
-        <form method="POST" action="{% url 'verify_code' %}" id="login-form">
-            {% csrf_token %}
-            <input type="text" class="form-input" name="phone" placeholder="شماره موبایل یا ایمیل">
-            <button type="submit" class="login-button">ورود</button>
-        </form>
-        <p class="terms">
-    ورود شما به معنای پذیرش        <a href="{% url 'terms' %}">شرایط دیجی‌کالا</a> و
-            <a href="{% url 'privacy' %}">قوانین حریم خصوصی</a> است
-        </p>
+<!-- Header-->
+        <header class="bg-dark py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">Login</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">Log In To Your Account...</p>
+                </div>
+            </div>
+        </header>
 
-    </div>
+        <div class="container">
+            <div class="row">
+                <center>
+                    <div class="col-8">
 
-    <script src="{% static 'home/js/validation.js' %}"></script>
+                        <br/><br/>
+<form method="POST" action="{% url 'login' %}">
+    {% csrf_token %}
+    
+  <div class="mb-3">
+    
+    <input type="text" class="form-input" name="username" placeholder="Enter Your Username">
+    
+  </div>
+  <div class="mb-3">
+    
+    <input type="password" class="form-input" name="password" placeholder="Enter Your Password">
+  </div>
+  <br/><br/>
+  <button type="submit" class="btn btn-secondary">Login</button>
+</form>
+
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+                    </div>
+                </center>
+            </div>
+        </div>
+
 {% endblock %}

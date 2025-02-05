@@ -1,87 +1,105 @@
-from django.contrib.auth.hashers import check_password
 from django.db import models
-from jdatetime import datetime
+from django.contrib.auth.models import User
+from datetime import datetime
+import jdatetime
 
 
 def persian_now():
-    return datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
+    return jdatetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
 
 
-class BaseModel(models.Model):
-    name = models.CharField(max_length=255, verbose_name="نام")
-    phone = models.CharField(max_length=15, verbose_name="تلفن", blank=True)
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="کاربر")
+    date_modified = models.DateTimeField(auto_now=True, verbose_name="تاریخ ویرایش")
+    phone = models.CharField(max_length=20, blank=True, verbose_name="شماره تلفن")
+    address1 = models.CharField(max_length=200, blank=True, verbose_name="آدرس ۱")
+    address2 = models.CharField(max_length=200, blank=True, verbose_name="آدرس ۲")
+    city = models.CharField(max_length=200, blank=True, verbose_name="شهر")
+    state = models.CharField(max_length=200, blank=True, verbose_name="استان")
+    zipcode = models.CharField(max_length=200, blank=True, verbose_name="کد پستی")
+    country = models.CharField(max_length=200, blank=True, verbose_name="کشور")
+    old_cart = models.CharField(
+        max_length=200, blank=True, null=True, verbose_name="سبد خرید قبلی"
+    )
+
+    def __str__(self):
+        return self.user.username
 
     class Meta:
-        abstract = True
+        verbose_name = "پروفایل"
+        verbose_name_plural = "پروفایل‌ها"
 
 
-class Category(BaseModel):
+class Category(models.Model):
+    name = models.CharField(max_length=50, verbose_name="نام دسته‌بندی")
+
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = "دسته بندی"
-        verbose_name_plural = "دسته بندی"
+        verbose_name = "دسته‌بندی"
+        verbose_name_plural = "دسته‌بندی‌ها"
 
 
-class Customer(BaseModel):
-    first_name = models.CharField(max_length=255, blank=True, verbose_name="نام کوچک")
-    last_name = models.CharField(max_length=255, verbose_name="نام خانوادگی")
-    email = models.EmailField(max_length=255, unique=True, verbose_name="ایمیل")
-    password = models.CharField(max_length=255, verbose_name="رمز عبور")
-    is_admin = models.BooleanField(default=False, verbose_name="سرپرست")
+class Customer(models.Model):
+    first_name = models.CharField(max_length=50, verbose_name="نام")
+    last_name = models.CharField(max_length=50, verbose_name="نام خانوادگی")
+    phone = models.CharField(max_length=10, verbose_name="شماره تلفن")
+    email = models.EmailField(max_length=100, verbose_name="ایمیل")
+    password = models.CharField(max_length=100, verbose_name="رمز عبور")
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
-    def check_password(self, raw_password):
-        return check_password(raw_password, self.password)
-
     class Meta:
-        verbose_name = "مشتریان"
+        verbose_name = "مشتری"
         verbose_name_plural = "مشتریان"
 
 
-class Product(BaseModel):
+class Product(models.Model):
+    name = models.CharField(max_length=100, verbose_name="نام محصول")
     price = models.DecimalField(
-        max_digits=6, decimal_places=2, default=0, verbose_name="قیمت"
+        default=0, decimal_places=2, max_digits=6, verbose_name="قیمت"
     )
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, default=1, verbose_name="دسته‌بندی"
     )
-    description = models.TextField(
-        blank=True, null=True, max_length=250, default="", verbose_name="توضیحات"
+    description = models.CharField(
+        max_length=250, default="", blank=True, null=True, verbose_name="توضیحات"
     )
-    image = models.ImageField(
-        upload_to="products/", blank=True, null=True, verbose_name="تصویر"
-    )
-    is_sale = models.BooleanField(default=False, verbose_name="فروش")
-
-    sale_price = models.DecimalField(
-        max_digits=6, decimal_places=2, default=0, verbose_name="قیمت فروش"
-    )
+    image = models.ImageField(upload_to="uploads/product/", verbose_name="تصویر محصول")
+    is_sale = models.BooleanField(default=False, verbose_name="تخفیف دارد؟")
+    sale_price = models.DecimalField(default=persian_now, decimal_places=2, max_digits=6, verbose_name="قیمت تخفیفی")
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = "محصولات"
+        verbose_name = "محصول"
         verbose_name_plural = "محصولات"
 
 
-class Order(BaseModel):
+class Order(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="محصول")
     customer = models.ForeignKey(
         Customer, on_delete=models.CASCADE, verbose_name="مشتری"
     )
-    quantity = models.PositiveIntegerField(verbose_name="تعداد", default=1)
-    address = models.TextField(max_length=500, verbose_name="آدرس")
-    date = models.DateTimeField(default=persian_now, verbose_name="تاریخ")
-    status = models.BooleanField(default=False, verbose_name="وضعیت")
+    quantity = models.IntegerField(default=1, verbose_name="تعداد")
+    address = models.CharField(
+        max_length=100, default="", blank=True, verbose_name="آدرس"
+    )
+    phone = models.CharField(
+        max_length=20, default="", blank=True, verbose_name="شماره تلفن"
+    )
+    date = models.DateField(default=persian_now, verbose_name="تاریخ سفارش")
+    status = models.BooleanField(default=False, verbose_name="وضعیت ارسال")
+
+    def persian_date(self):
+        return jdatetime.date.fromgregorian(date=self.date).strftime("%Y/%m/%d")
 
     def __str__(self):
-        return f"Order #{self.id} for {self.customer}"
+        return f"{self.product.name} - {self.persian_date()}"
 
     class Meta:
-        verbose_name = "سفارش ها"
-        verbose_name_plural = "سفارش ها"
+        verbose_name = "سفارش"
+        verbose_name_plural = "سفارش‌ها"

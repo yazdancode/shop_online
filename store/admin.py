@@ -1,81 +1,47 @@
 from django.contrib import admin
-from django.utils.html import format_html
+from .models import Profile, Category, Customer, Product, Order
+import jdatetime
 
-from .models import Category, Customer, Order, Product
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ("user", "phone", "date_modified_shamsi")
+    search_fields = ("user__username", "phone")
+
+    def date_modified_shamsi(self, obj):
+        return jdatetime.datetime.fromgregorian(datetime=obj.date_modified).strftime(
+            "%Y/%m/%d - %H:%M"
+        )
+
+    date_modified_shamsi.short_description = "تاریخ ویرایش (شمسی)"
 
 
-# Register the Category model
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ("id", "name")  # Displays the id and name of categories
-    search_fields = ("name",)  # Allows searching by name
+    list_display = ("name",)
+    search_fields = ("name",)
 
 
-# Register the Customer model
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "first_name",
-        "last_name",
-        "email",
-        "phone",
-    )  # Display key customer info
-    search_fields = (
-        "first_name",
-        "last_name",
-        "email",
-        "phone",
-    )  # Allows searching by fields
-    list_filter = ("email",)  # Allows filtering by email
+    list_display = ("first_name", "last_name", "phone", "email")
+    search_fields = ("first_name", "last_name", "phone", "email")
 
 
-# Register the Product model
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "name",
-        "price",
-        "category",
-        "description",
-        "image_preview",  # If you want a thumbnail preview of images
-        "is_sale",
-        "sale_price",
-    )  # Display key product info
-    search_fields = (
-        "name",
-        "category__name",
-    )  # Allows searching by product name and category name
-    list_filter = (
-        "category",
-        "is_sale",
-    )  # Allows filtering by category and sale status
-
-    # Custom image preview function
-    def image_preview(self, obj):
-        if obj.image:
-            return format_html('<img src="{}" width="50" height="50" />', obj.image.url)
-        return "No Image"
-
-    image_preview.short_description = "Image Preview"
+    list_display = ("name", "price", "category", "is_sale", "sale_price")
+    list_filter = ("category", "is_sale")
+    search_fields = ("name", "category__name")
 
 
-# Register the Order model
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "customer",
-        "product",
-        "quantity",
-        "address",
-        "status",
-        "date",
-    )  # Display key order info
-    search_fields = (
-        "customer__first_name",
-        "customer__last_name",
-        "product__name",
-    )  # Allows searching by customer or product
-    list_filter = ("status",)  # Allows filtering by order status
+    list_display = ("product", "customer", "quantity", "persian_order_date", "status")
+    list_filter = ("status",)
+    search_fields = ("product__name", "customer__first_name", "customer__last_name")
+
+    def persian_order_date(self, obj):
+        return jdatetime.date.fromgregorian(date=obj.date).strftime("%Y/%m/%d")
+
+    persian_order_date.short_description = "تاریخ سفارش (شمسی)"
